@@ -25,6 +25,10 @@ func (d deck) print() {
 	}
 }
 
+func (d deck) deal(handSize int) deck {
+	return d[:handSize]
+}
+
 // newDeck
 // print
 // shuffle
