@@ -23,6 +23,18 @@ func newDeck() deck {
 	return cards
 }
 
+func newDeckFromFile() deck {
+	data, err := os.ReadFile("./saved_deck.txt")
+
+	if err != nil {
+		fmt.Println("Error:", err)
+		os.Exit(1)
+	}
+
+	s := strings.Split(string(data), ",")
+	return deck(s)
+}
+
 func (d deck) print() {
 	for _, card := range d {
 		fmt.Println(card)

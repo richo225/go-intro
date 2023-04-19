@@ -1,9 +1,8 @@
 package main
 
 func main() {
-	cards := newDeck()
+	cards := newDeckFromFile()
 
-	hand := cards.deal(4)
+	hand := cards.deal(2)
 	hand.print()
-	hand.saveTofile()
 }
