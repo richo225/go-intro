@@ -5,4 +5,5 @@ func main() {
 
 	hand := cards.deal(4)
 	hand.print()
+	hand.saveTofile()
 }
