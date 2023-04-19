@@ -25,8 +25,8 @@ func newDeck() deck {
 	return cards
 }
 
-func newDeckFromFile() deck {
-	data, err := os.ReadFile("./saved_deck.txt")
+func newDeckFromFile(filename string) deck {
+	data, err := os.ReadFile(filename)
 
 	if err != nil {
 		fmt.Println("Error:", err)
@@ -51,9 +51,9 @@ func (d deck) toString() string {
 	return strings.Join(d, ",")
 }
 
-func (d deck) saveTofile() error {
+func (d deck) saveTofile(filename string) error {
 	data := []byte(d.toString())
-	return os.WriteFile("cards.txt", data, 0666)
+	return os.WriteFile(filename, data, 0666)
 }
 
 func (d deck) shuffle() deck {
