@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"testing"
 )
 
@@ -23,5 +24,20 @@ func NewDeckExample() {
 func BenchmarkNewDeck(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		newDeck()
+	}
+}
+
+func TestSaveToFile(t *testing.T) {
+	os.Remove("saved_deck_test.txt")
+	deck := newDeck()
+	deck.saveTofile("saved_deck_test.txt")
+
+	_, error := os.Stat("saved_deck_test.txt")
+
+	actual := os.IsNotExist(error)
+	expected := false
+
+	if actual != expected {
+		t.Errorf("expected %v, actual %v", expected, actual)
 	}
 }
