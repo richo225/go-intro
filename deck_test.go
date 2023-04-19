@@ -28,7 +28,6 @@ func BenchmarkNewDeck(b *testing.B) {
 }
 
 func TestSaveToFile(t *testing.T) {
-	os.Remove("saved_deck_test.txt")
 	deck := newDeck()
 	deck.saveTofile("saved_deck_test.txt")
 
@@ -39,5 +38,15 @@ func TestSaveToFile(t *testing.T) {
 
 	if actual != expected {
 		t.Errorf("expected %v, actual %v", expected, actual)
+	}
+
+	os.Remove("saved_deck_test.txt")
+}
+
+func BenchmarkSaveToFile(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		deck := newDeck()
+		deck.saveTofile("saved_deck_test.txt")
+		os.Remove("saved_deck_test.txt")
 	}
 }
