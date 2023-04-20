@@ -15,18 +15,26 @@ var websites = []string{
 }
 
 func main() {
+	c := make(chan string)
+
 	for _, website := range websites {
-		checkWebsiteStatus(website)
+		go checkWebsiteStatus(website, c)
 	}
+
+	fmt.Println(<-c)
+	fmt.Println(<-c)
+	fmt.Println(<-c)
+	fmt.Println(<-c)
+	fmt.Println(<-c)
 }
 
-func checkWebsiteStatus(website string) {
+func checkWebsiteStatus(website string, c chan string) {
 	resp, err := http.Get(website)
 
 	if err != nil {
-		fmt.Println(website, "might be down: ", err)
+		c <- fmt.Sprintln(website, "might be down:", err)
 		os.Exit(1)
 	}
 
-	fmt.Println(website, "status:", resp.Status)
+	c <- fmt.Sprintln(website, "status:", resp.Status)
 }
