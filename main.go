@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math"
+	"reflect"
 )
 
 type shape interface {
@@ -34,5 +35,5 @@ func (s square) getArea() float64 {
 }
 
 func printArea(s shape) {
-	fmt.Println("Area of shape:", s.getArea())
+	fmt.Println("Area of", reflect.TypeOf(s).Name(), ":", s.getArea())
 }
