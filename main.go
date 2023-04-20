@@ -20,8 +20,8 @@ func main() {
 		go checkWebsiteStatus(website, c)
 	}
 
-	for {
-		go checkWebsiteStatus(<-c, c)
+	for l := range c {
+		go checkWebsiteStatus(l, c)
 	}
 }
 
