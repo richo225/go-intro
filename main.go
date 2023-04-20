@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"os"
 )
 
 var websites = []string{
@@ -21,20 +20,18 @@ func main() {
 		go checkWebsiteStatus(website, c)
 	}
 
-	fmt.Println(<-c)
-	fmt.Println(<-c)
-	fmt.Println(<-c)
-	fmt.Println(<-c)
-	fmt.Println(<-c)
+	for {
+		go checkWebsiteStatus(<-c, c)
+	}
 }
 
 func checkWebsiteStatus(website string, c chan string) {
 	resp, err := http.Get(website)
 
 	if err != nil {
-		c <- fmt.Sprintln(website, "might be down:", err)
-		os.Exit(1)
+		fmt.Println(website, "might be down:", err)
 	}
 
-	c <- fmt.Sprintln(website, "status:", resp.Status)
+	fmt.Println(website, "status:", resp.Status)
+	c <- website
 }
