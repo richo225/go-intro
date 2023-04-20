@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"time"
 )
 
 var websites = []string{
@@ -21,7 +22,10 @@ func main() {
 	}
 
 	for l := range c {
-		go checkWebsiteStatus(l, c)
+		go func(link string) {
+			time.Sleep(time.Second * 5)
+			go checkWebsiteStatus(link, c)
+		}(l)
 	}
 }
 
